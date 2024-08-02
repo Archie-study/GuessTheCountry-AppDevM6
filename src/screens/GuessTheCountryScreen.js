@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { countryList, objectImageList, objectNameList } from "../../data/Data";
 
 const GuessTheCountryScreen = () => {
+    const [answer, setAnswer] = useState('');
+    const [index, setIndex] = useState()
+
+    // state check the Answer
+    const [result, setResult] = useState('')
+
+    const randomIndex = () => {
+        const pickRandomIndex = Math.floor(Math.random()*countryList.length);
+        setIndex(pickRandomIndex);
+    }
+
+    // Check Answer
+    const checkAnswer = () => {
+        if(answer.toLowerCase() === countryList[index]){
+            setResult('true')
+        } else {
+            setResult('false')
+        }
+
+        setTimeout(() => {
+            setResult('');
+            setAnswer('');
+            randomIndex();
+        }, 1500)
+    }
+
+    useEffect(() => {
+        randomIndex();
+    }, [])
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{ textDecorationLine: 'underline', fontSize: 28, fontFamily:'serif', marginBottom: 16}}>
@@ -9,15 +40,20 @@ const GuessTheCountryScreen = () => {
             </Text>
             <Image 
                 style={{width: 250, height: 250, borderRadius: 10}}
-                source={{uri: 'https://wallpaperaccess.com/full/180136.jpg'}}
+                source={{uri: objectImageList[index]}}
             />
             <View style={{ margin: 8, backgroundColor: 'lavender', padding: 4, borderWidth: 1}}>
                 <Text style={{ fontSize: 18}}>
-                    Big Ben
+                    {objectNameList[index]}
                 </Text>
             </View>
             <View style={{ flexDirection: 'row', margin: 8}}>
-                <TextInput style={{ borderWidth: 1, width: '50%'}} placeholder="Write your answer" />
+                <TextInput 
+                    style={{ borderWidth: 1, width: '50%'}} 
+                    placeholder="Write your answer" 
+                    onChangeText={(text) => setAnswer(text)}
+                    value={answer}
+                />
                 <TouchableOpacity
                     style={{
                         borderWidth: 1,
@@ -30,12 +66,14 @@ const GuessTheCountryScreen = () => {
                         marginTop: 8,
                         backgroundColor: 'skyblue'
                     }}
+                    onPress={() => checkAnswer()}
                 >
                     <Text style={{ fontSize: 18 }}>
                         Submit
                     </Text>
                 </TouchableOpacity>
             </View>
+            <Text>{result}</Text>
         </View>
     )
 };

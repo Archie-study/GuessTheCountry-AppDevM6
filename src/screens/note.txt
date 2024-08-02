@@ -1,0 +1,19 @@
+Meeting 6 - React Native Hooks
+
+HomeScreen.js file
+http://tiny.cc/EN_app1_m6_c1
+
+in Challenge 1, they forgot to insert the step of solution,
+so here's the way
+
+ const [number, setNumber] = useState(0);
+
+    const decreaseNumber = () => {
+        setNumber(number - 1);
+    };
+
+    const increaseNumber = () => {
+        setNumber(number + 1);
+    };
+
+
