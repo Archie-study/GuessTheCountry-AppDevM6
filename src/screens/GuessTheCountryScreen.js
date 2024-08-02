@@ -9,6 +9,9 @@ const GuessTheCountryScreen = () => {
     // state check the Answer
     const [result, setResult] = useState('')
 
+    // state for scoring
+    const [score, setScore] = useState(0)
+
     const randomIndex = () => {
         const pickRandomIndex = Math.floor(Math.random()*countryList.length);
         setIndex(pickRandomIndex);
@@ -18,6 +21,7 @@ const GuessTheCountryScreen = () => {
     const checkAnswer = () => {
         if(answer.toLowerCase() === countryList[index]){
             setResult('true')
+            setScore(score + 10)
         } else {
             setResult('false')
         }
@@ -33,15 +37,27 @@ const GuessTheCountryScreen = () => {
         randomIndex();
     }, [])
 
+    // Check if index is valid and objectImageList has data
+    const imageSource = index >= 0 && objectImageList[index] ? { uri: objectImageList[index]} : null;
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{ textDecorationLine: 'underline', fontSize: 28, fontFamily:'serif', marginBottom: 16}}>
                 Guess The Country
             </Text>
-            <Image 
+            {/* Use this structure when error "ReactImageView: Image source "null" doesn't exist" appear */}
+            {
+                imageSource ?
+                (<Image 
+                    style={{width: 250, height: 250, borderRadius: 10}}
+                    source={imageSource}
+                />) :
+                <Text>Loading image ...</Text>
+            }
+            {/* <Image 
                 style={{width: 250, height: 250, borderRadius: 10}}
                 source={{uri: objectImageList[index]}}
-            />
+            /> */}
             <View style={{ margin: 8, backgroundColor: 'lavender', padding: 4, borderWidth: 1}}>
                 <Text style={{ fontSize: 18}}>
                     {objectNameList[index]}
@@ -73,7 +89,16 @@ const GuessTheCountryScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
+
+            {/* Component that shows result */}
             <Text>{result}</Text>
+
+            {/* Component that shows score */}
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16}}>
+                <View style={{ borderWidth: 1, padding: 8, alignItems: 'center', backgroundColor: 'mistyrose', borderRadius: 20}}>
+                    <Text>Score : {score}</Text>
+                </View>
+            </View>
         </View>
     )
 };
