@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const MainNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Win">
+            <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen
                     name="Home"
                     component={GuessTheCountryScreen}
