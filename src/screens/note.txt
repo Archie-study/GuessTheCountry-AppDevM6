@@ -17,3 +17,68 @@ so here's the way
     };
 
 
+ID :
+Challenge 1 : http://tiny.cc/app1_m6_c1
+Challenge 2 : http://tiny.cc/app1_m6_c2
+Challenge 3 : https://bit.ly/app1_meeting6_c3
+
+EN :
+Challenge 1 : http://tiny.cc/EN_app1_m6_c1
+Challenge 2 : http://tiny.cc/EN_app1_m6_c2
+Challenge 3 : http://tiny.cc/EN_app1_meeting6_c3 
+
+
+
+
+Meeting 7 - Stack Navigation and Another Way of Using useEffect
+Install this library
+==> npm install @react-navigation/stack
+
+Asset Image & DIY
+Asset Challenge 1 : https://bit.ly/app1_meeting7_img_c1
+Asset DIY         : https://bit.ly/app1_meeting7_img_diy
+
+ID :
+Challenge 1         : https://bit.ly/app1_meeting7_c1
+Challenge 2         : https://bit.ly/app1_meeting7_c2
+DIY                 : https://bit.ly/app1_meeting7_diy
+Template Meeting 8  : https://bit.ly/install_solar_system
+
+EN :
+Challenge 1         : http://tiny.cc/EN_app1_meeting7_c1
+Challenge 2         : http://tiny.cc/EN_app1_meeting7_c2
+DIY                 : http://tiny.cc/EN_app1_meeting7_diy
+Template Meeting 8  : http://tiny.cc/EN_install_solar_system
+
+
+
+ERROR
+```
+Console warning
+ReactImageView: Image source "null" doesn't exist
+
+Solusi 
+const GuessTheCountryScreen = () => {
+  // ... other code
+
+  useEffect(() => {
+    randomIndex();
+  }, []);
+
+  // Check if index is valid and objectImageList has data
+  const imageSource = index >= 0 && objectImageList[index] ? { uri: objectImageList[index] } : null;
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {/* ... other components */}
+      {imageSource ? (
+        <Image style={{ width: 250, height: 250, borderRadius: 10 }} source={imageSource} />
+      ) : (
+        <Text>Loading image...</Text> // or other loading indicator
+      )}
+      {/* ... other components */}
+    </View>
+  );
+};
+
+```

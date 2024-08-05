@@ -12,6 +12,9 @@ const GuessTheCountryScreen = (props) => {
     // state for scoring
     const [score, setScore] = useState(0)
 
+    // state for life
+    const [life, setLife] = useState(3)
+
     // navigation as parameter
     const { navigation } = props;
 
@@ -27,6 +30,7 @@ const GuessTheCountryScreen = (props) => {
             setScore(score + 10)
         } else {
             setResult('false')
+            setLife(life - 1)
         }
 
         setTimeout(() => {
@@ -36,21 +40,30 @@ const GuessTheCountryScreen = (props) => {
         }, 1500)
     }
 
+    // Check if the score is 50 then Win
     useEffect(() => {
         if(score === 50){
             navigation.navigate('Win')
         }
     }, [score])
 
+    // Check if the life is 0 then Game Over
+    useEffect(() => {
+        if(life === 0){
+            navigation.navigate('GameOver')
+        }
+    }, [life])
+
     // useEffect(() => {
     //     randomIndex();
     // }, [])
 
-    // Reset the score when we play again
+    // Reset the score when we play againgit 
     useEffect(() => {
         const homePage = navigation.addListener('focus', () => {
             randomIndex();
             setScore(0)
+            setLife(3)
         })
         return homePage;
     }, [])
@@ -112,12 +125,38 @@ const GuessTheCountryScreen = (props) => {
                 {/* Component that shows result */}
                 <Text>{result}</Text>
 
-                {/* Component that shows score */}
-                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16}}>
-                    <View style={{ borderWidth: 1, padding: 8, alignItems: 'center', backgroundColor: 'mistyrose', borderRadius: 20}}>
+                
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 16, flexDirection: 'row'}}>
+                
+                    {/* Component that shows score */}    
+                    <View 
+                        style={{ 
+                            borderWidth: 1, 
+                            padding: 8, 
+                            alignItems: 'center', 
+                            backgroundColor: 'mistyrose', 
+                            borderRadius: 20,
+                            flex: 1,
+                            margin: 8}}>
                         <Text>Score : {score}</Text>
                     </View>
+
+                    {/* Component that shows life */}
+                    <View
+                        style={{
+                            borderWidth: 1,
+                            padding: 8,
+                            alignItems: 'center',
+                            backgroundColor: 'mistyrose',
+                            borderRadius: 20,
+                            flex: 1
+                        }}
+                    >
+                        <Text>Life : {life}</Text>
+                    </View>
                 </View>
+
+
             </View>
         </ScrollView>
     )
